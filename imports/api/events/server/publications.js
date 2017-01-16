@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 import { Events } from '../events.js';
 import { Meetups } from '../../meetups/meetups.js';
 
@@ -20,6 +20,14 @@ Meteor.publish('events.me', function eventsMePublication() {
   return Events.find({ createdBy: this.userId });
 });
 
-Meteor.publish('events.create', function eventsMePublication() {
-  return Meetups.find({ owner: this.userId });
+Meteor.publish('events.createEdit', function eventsMePublication(eventId) {
+  check(eventId, Match.OneOf(String, null, undefined));
+
+  const results = [
+    Meetups.find({ owner: this.userId }),
+  ];
+
+  if (eventId) results.push(Events.find({ _id: eventId }));
+
+  return results;
 });

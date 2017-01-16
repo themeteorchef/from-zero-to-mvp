@@ -5,3 +5,9 @@ form label.error {
   font-weight: normal;
   color: lighten( red, 20% );
 }
+
+.form-hint {
+  margin-top: 8px;
+  font-style: italic;
+  color: #888;
+}
