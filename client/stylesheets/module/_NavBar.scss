@@ -1,0 +1,60 @@
+.navbar {
+  background: #fff;
+  border-radius: 0px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.navbar img {
+  width: 70px;
+  position: relative;
+  top: -1px;
+}
+
+.navbar-default .navbar-nav {
+  margin: 0 -15px;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > li a:hover,
+.navbar-default .navbar-nav > li a:focus,
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav .open .dropdown-menu > li:hover > a,
+.navbar-default .navbar-nav .open .dropdown-menu > li.active > a,
+.navbar-default .navbar-nav .open .dropdown-menu > li.active > a:hover {
+  color: $blue;
+  background: #fff;
+}
+
+.navbar-collapse .nav > li,
+.navbar-collapse .nav > li.dropdown.open > a {
+  border-bottom: 1px solid #eee;
+}
+
+@include breakpoint(tablet) {
+  .navbar-brand {
+    padding-right: 15px;
+  }
+
+  .navbar-default .navbar-nav {
+    margin: 0;
+  }
+
+  .navbar-default .navbar-nav.navbar-right {
+    margin-right: -15px;
+  }
+
+  .navbar-collapse .nav > li,
+  .navbar-collapse .nav > li.dropdown.open > a {
+    border-bottom: none;
+  }
+
+  .navbar-default .navbar-nav > li > a {
+    padding: 15px 12px;
+  }
+}

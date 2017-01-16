@@ -1,0 +1,34 @@
+.MeetupsList {
+  @extend %clearfix;
+}
+
+.MeetupsList .MeetupsListItem {
+  h4 {
+    margin-top: 0px;
+  }
+
+  p {
+    margin-bottom: 0px;
+  }
+
+  p:last-child {
+    color: #888;
+    margin-top: 7px;
+  }
+}
+
+@include breakpoint(tablet) {
+  .MeetupsList {
+    @include flexbox;
+    @include flex-wrap(wrap);
+  }
+
+  .MeetupsList .MeetupsListItem {
+    width: 32%;
+    float: left;
+
+    &:not(:nth-child(3n)) {
+      margin-right: 2%;
+    }
+  }
+}

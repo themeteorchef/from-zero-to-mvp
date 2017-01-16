@@ -1,0 +1,24 @@
+@include breakpoint(tablet) {
+  .dropdown-menu {
+    background: $blue;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.04);
+    border: 1px solid $blue;
+    border-radius: 0 0 3px 3px;
+
+    > li > a {
+      color: darken($blue, 25%);
+      background: transparent;
+    }
+
+    > li > a:hover {
+      color: #fff !important;
+      background: transparent !important;
+    }
+  }
+
+  .navbar-default .navbar-nav .open .dropdown-menu > li.active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > li.active > a:hover {
+    color: #fff;
+    background: transparent;
+  }
+}
