@@ -7,7 +7,7 @@ import { Meteor } from 'meteor/meteor';
 import { Bert } from 'meteor/themeteorchef:bert';
 import '../../modules/validation.js';
 
-export default class CreateEditEvent extends React.Component {
+export default class CreateEvent extends React.Component {
   constructor(props) {
     super(props);
     const initialStartDateTime = moment();
@@ -286,7 +286,7 @@ export default class CreateEditEvent extends React.Component {
   }
 }
 
-CreateEditEvent.propTypes = {
+CreateEvent.propTypes = {
   meetups: React.PropTypes.array,
   event: React.PropTypes.object,
 };

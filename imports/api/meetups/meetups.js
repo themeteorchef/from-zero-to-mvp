@@ -39,9 +39,6 @@ export const MeetupsSchema = new SimpleSchema({
   founded: {
     type: String,
     label: 'The date this meetup was founded.',
-    autoValue() {
-      if (this.isInsert) (new Date()).toISOString();
-    },
   },
   members: {
     type: [String],

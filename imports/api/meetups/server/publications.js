@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 import { Meetups } from '../meetups.js';
 import { Events } from '../../events/events.js';
 
@@ -19,4 +19,9 @@ Meteor.publish('meetups.view', (meetupId) => {
     Events.find({ meetup: meetupId }),
     Meteor.users.find({ _id: meetup.fetch()[0].members }, { fields: { profile: 1 } }),
   ];
+});
+
+Meteor.publish('meetups.edit', (meetupId) => {
+  check(meetupId, Match.OneOf(String, null, undefined));
+  return Meetups.find({ _id: meetupId });
 });

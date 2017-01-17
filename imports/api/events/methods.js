@@ -5,7 +5,7 @@ import { check } from 'meteor/check';
 import { Events } from './events';
 
 Meteor.methods({
-  'events.insert': (event) => {
+  'events.insert': function eventsInsert(event) {
     check(event, {
       published: Boolean,
       meetup: String,
@@ -21,7 +21,7 @@ Meteor.methods({
 
     return Events.insert(eventToInsert);
   },
-  'events.update': (event) => {
+  'events.update': function eventsUpdate(event) {
     check(event, {
       _id: String,
       published: Boolean,
@@ -39,8 +39,23 @@ Meteor.methods({
 
     return Events.update(eventId, { $set: eventToUpdate });
   },
-  'events.remove': (eventId) => {
+  'events.remove': function eventsRemove(eventId) {
     check(eventId, String);
     return Events.remove(eventId);
+  },
+  'events.rsvp': function eventsRSVP(eventId) {
+    check(eventId, String);
+
+    const isAttending = Events.findOne({ rsvps: { $in: [this.userId] } });
+
+    if (!isAttending) {
+      Events.update(eventId, {
+        $addToSet: { rsvps: this.userId },
+      });
+    } else {
+      Events.update(eventId, {
+        $pull: { rsvps: this.userId },
+      });
+    }
   },
 });

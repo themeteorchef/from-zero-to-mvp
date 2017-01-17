@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { composeWithTracker } from 'react-komposer';
+import { _ } from 'meteor/underscore';
 import { Events } from '../../api/events/events.js';
 import { Meetups } from '../../api/meetups/meetups.js';
 import ViewEvent from '../pages/ViewEvent.js';
@@ -15,8 +16,9 @@ const composer = ({ params }, onData) => {
     const rsvps = Meteor.users.find({ _id: { $in: event.rsvps } }).fetch();
     const meetup = Meetups.findOne({ _id: event.meetup });
     const isOwner = event.createdBy === owner;
+    const isAttending = _.find(event.rsvps, rsvp => rsvp === Meteor.userId());
 
-    onData(null, { event, rsvps, meetup, isOwner });
+    onData(null, { event, rsvps, meetup, isOwner, isAttending });
   }
 };
 

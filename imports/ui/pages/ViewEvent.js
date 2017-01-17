@@ -1,13 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Row, Col, Jumbotron, Panel, Alert } from 'react-bootstrap';
+import { Row, Col, Jumbotron, Panel, Alert, Button } from 'react-bootstrap';
 import moment from 'moment';
+import { Meteor } from 'meteor/meteor';
+import { Bert } from 'meteor/themeteorchef:bert';
 
 const buildLocation = ({ address, city, state }) => {
   return `${address}, ${city}, ${state}`;
 };
 
-const ViewEvent = ({ event, rsvps, meetup, isOwner }) => {
+const toggleRSVP = (eventId) => {
+  Meteor.call('events.rsvp', eventId, (error) => {
+    if (error) {
+      Bert.alert(error.reason, 'danger');
+    } else {
+      Bert.alert('RSVP updated!', 'success');
+    }
+  });
+};
+
+const ViewEvent = ({ event, rsvps, meetup, isOwner, isAttending }) => {
   const location = buildLocation(event.location);
   const startDateDay = moment(event.startDateTime).format('MMMM Do, YYYY');
   const endDateDay = moment(event.endDateTime).format('MMMM Do, YYYY');
@@ -34,6 +46,15 @@ const ViewEvent = ({ event, rsvps, meetup, isOwner }) => {
             </h4>
             <h4>{ location }</h4>
             <h4>{ dateTime }</h4>
+            { isAttending ? <Button
+              onClick={() => { toggleRSVP(event._id); }}
+              bsStyle="success"
+            >
+              <i className="fa fa-check"></i> You're Going!
+            </Button> : <Button
+              bsStyle="warning"
+              onClick={() => { toggleRSVP(event._id); }}
+            >RSVP to This</Button> }
           </Jumbotron>
           <p>{ event.description }</p>
 
@@ -52,6 +73,7 @@ ViewEvent.propTypes = {
   rsvps: React.PropTypes.array,
   meetup: React.PropTypes.object,
   isOwner: React.PropTypes.bool,
+  isAttending: React.PropTypes.bool,
 };
 
 export default ViewEvent;

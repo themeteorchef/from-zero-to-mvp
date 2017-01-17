@@ -9,7 +9,7 @@ Meteor.publish('events.index', () => Events.find({}, {
 
 Meteor.publish('events.view', (eventId) => {
   check(eventId, String);
-  const event = Events.find({ _id: eventId });
+  const event = Events.find({ _id: eventId, published: true });
   return [
     event,
     Meetups.find({ _id: event.fetch()[0].meetup }),

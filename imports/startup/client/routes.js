@@ -12,7 +12,8 @@ import MyMeetups from '../../ui/containers/MyMeetups.js';
 import MyEvents from '../../ui/containers/MyEvents.js';
 import CreateEvent from '../../ui/containers/CreateEvent.js';
 import EditEvent from '../../ui/containers/EditEvent.js';
-// import CreateMeetup from '../../ui/pages/CreateMeetup.js';
+import CreateMeetup from '../../ui/pages/CreateMeetup.js';
+import EditMeetup from '../../ui/containers/EditMeetup.js';
 import ViewEvent from '../../ui/containers/ViewEvent.js';
 import ViewMeetup from '../../ui/containers/ViewMeetup.js';
 import Login from '../../ui/pages/Login.js';
@@ -37,8 +38,9 @@ Meteor.startup(() => {
         <IndexRoute name="index" component={ Index } />
         <Route path="/meetups">
           <IndexRoute name="meetups" component={ MeetupsIndex } />
-          { /* <Route path="create" name="createMeetup" component={ CreateMeetup } /> */ }
+          <Route path="create" name="createMeetup" component={ CreateMeetup } />
           <Route path=":_id" name="viewMeetup" component={ ViewMeetup } />
+          <Route path=":_id/edit" name="editMeetup" component={ EditMeetup } />
         </Route>
         <Route path="/events">
           <IndexRoute name="events" component={ EventsIndex } />

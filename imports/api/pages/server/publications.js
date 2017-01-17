@@ -15,7 +15,7 @@ Meteor.publish('pages.index', () => [
     },
     limit: 4,
   }),
-  Events.find({}, {
+  Events.find({ published: true }, {
     fields: {
       name: 1,
       startDateTime: 1,
