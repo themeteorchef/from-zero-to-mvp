@@ -1,17 +1,15 @@
 import { Meteor } from 'meteor/meteor';
 import { composeWithTracker } from 'react-komposer';
-import { Events } from '../../api/events/events.js';
 import { Meetups } from '../../api/meetups/meetups.js';
-import CreateEvent from '../pages/CreateEditEvent.js';
+import CreateEvent from '../pages/CreateEvent.js';
 import Loading from '../components/Loading.js';
 
-const composer = ({ params }, onData) => {
-  const subscription = Meteor.subscribe('events.createEdit', params._id);
+const composer = (props, onData) => {
+  const subscription = Meteor.subscribe('events.create');
 
   if (subscription.ready()) {
-    const event = Events.findOne(params._id);
     const meetups = Meetups.find({ owner: Meteor.userId() }).fetch();
-    onData(null, { event, meetups });
+    onData(null, { meetups });
   }
 };
 

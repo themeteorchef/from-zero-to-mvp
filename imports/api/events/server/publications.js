@@ -12,6 +12,7 @@ Meteor.publish('events.view', (eventId) => {
   const event = Events.find({ _id: eventId });
   return [
     event,
+    Meetups.find({ _id: event.fetch()[0].meetup }),
     Meteor.users.find({ _id: event.fetch()[0].rsvps }, { fields: { profile: 1 } }),
   ];
 });
@@ -20,7 +21,11 @@ Meteor.publish('events.me', function eventsMePublication() {
   return Events.find({ createdBy: this.userId });
 });
 
-Meteor.publish('events.createEdit', function eventsMePublication(eventId) {
+Meteor.publish('events.create', function eventsMePublication() {
+  return Meetups.find({ owner: this.userId });
+});
+
+Meteor.publish('events.edit', function eventsMePublication(eventId) {
   check(eventId, Match.OneOf(String, null, undefined));
 
   const results = [

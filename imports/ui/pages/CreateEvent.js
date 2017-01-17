@@ -7,11 +7,11 @@ import { Meteor } from 'meteor/meteor';
 import { Bert } from 'meteor/themeteorchef:bert';
 import '../../modules/validation.js';
 
-export default class EditEvent extends React.Component {
+export default class CreateEditEvent extends React.Component {
   constructor(props) {
     super(props);
-    const initialStartDateTime = props.event ? moment(props.event.startDateTime) : moment();
-    const initialEndDateTime = props.event ? moment(props.event.endDateTime) : moment().add(1, 'hour');
+    const initialStartDateTime = moment();
+    const initialEndDateTime = moment().add(1, 'hour');
     this.state = { startDateTime: initialStartDateTime, endDateTime: initialEndDateTime };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -19,8 +19,7 @@ export default class EditEvent extends React.Component {
   handleSubmit() {
     const { event } = this.props;
 
-    const eventToUpdate = {
-      _id: event._id,
+    const eventToInsert = {
       published: this.published.value === 'yes',
       meetup: this.meetup.value,
       name: this.name.value,
@@ -35,19 +34,19 @@ export default class EditEvent extends React.Component {
       },
     };
 
-    Meteor.call('events.update', eventToUpdate, (error) => {
+    Meteor.call('events.insert', eventToInsert, (error, response) => {
       if (error) {
-        Bert.alert(error.reason.message, 'danger');
+        Bert.alert(error.reason, 'danger');
       } else {
-        browserHistory.push(`/events/${event._id}`);
-        Bert.alert('Event updated!', 'success');
+        browserHistory.push(`/events/${response}`);
+        Bert.alert('Event created!', 'success');
       }
     });
   }
 
   componentDidMount() {
     const component = this;
-    $(component.editEventForm).validate({
+    $(component.createEventForm).validate({
       rules: {
         published: {
           required: true,
@@ -121,9 +120,9 @@ export default class EditEvent extends React.Component {
   render() {
     const { meetups, event } = this.props;
     return (
-      <div className="EditEvent">
+      <div className="CreateEvent">
         <form
-          ref={editEventForm => (this.editEventForm = editEventForm)}
+          ref={createEventForm => (this.createEventForm = createEventForm)}
           onSubmit={submitEvent => submitEvent.preventDefault()}
         >
           { meetups.length > 0 ? <Row>
@@ -137,7 +136,6 @@ export default class EditEvent extends React.Component {
                       className="form-control"
                       placeholder="Published?"
                       name="published"
-                      defaultValue={ event && event.published }
                     >
                       <option value="yes">Yes</option>
                       <option value="no">No</option>
@@ -154,7 +152,6 @@ export default class EditEvent extends React.Component {
                       ref={meetup => (this.meetup = meetup)}
                       className="form-control"
                       placeholder="Select a meetup..."
-                      defaultValue={ event && event.meetup }
                       name="meetup"
                     >
                       {meetups.map(({ _id, name }) => (
@@ -173,7 +170,6 @@ export default class EditEvent extends React.Component {
                       className="form-control"
                       ref={name => (this.name = name)}
                       placeholder="Monthly Talks &amp; Presentations"
-                      defaultValue={ event && event.name }
                       name="name"
                     />
                   </FormGroup>
@@ -187,7 +183,6 @@ export default class EditEvent extends React.Component {
                       className="form-control"
                       ref={description => (this.description = description)}
                       placeholder="For this meetup, we'll be discussing..."
-                      defaultValue={ event && event.description }
                       name="description"
                     />
                   </FormGroup>
@@ -278,7 +273,7 @@ export default class EditEvent extends React.Component {
                   <Button
                     type="submit"
                     bsStyle="success"
-                  >Save Event</Button>
+                  >Create Event</Button>
                 </Col>
               </Row>
             </Col>
@@ -291,7 +286,7 @@ export default class EditEvent extends React.Component {
   }
 }
 
-EditEvent.propTypes = {
+CreateEditEvent.propTypes = {
   meetups: React.PropTypes.array,
   event: React.PropTypes.object,
 };

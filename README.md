@@ -1,3 +1,6 @@
+#### Gather
+A supplemental app for the talk ["From Zero to MVP"](https://www.meetup.com/Meteor-NY/events/236096230/) by The Meteor Chef. Built with [Meteor](https://meteor.com) and [React](https://facebook.github.io/react/).
+
 #### Resources
 
 - [Using NPM Packages](https://themeteorchef.com/tutorials/using-npm-packages) - This will help you to understand how we implemented the [node-geocoder](https://www.npmjs.com/package/node-geocoder) package for finding event locations.
@@ -8,3 +11,6 @@
 #### Inspiration
 
 - [You Can't, You Won't, You Don't Stop](https://www.youtube.com/watch?v=eky5uKILXtM) by Maciej Cegłowski
+- [Stacking the Bricks](https://unicornfree.com/stacking-the-bricks) by Amy Hoy
+- [12 Natural Laws of Business](https://www.youtube.com/watch?v=i0jyjqIHVVI) by Ari Weinzweig
+-

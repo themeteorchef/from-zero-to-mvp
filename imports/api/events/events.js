@@ -27,6 +27,7 @@ export const EventsSchema = new SimpleSchema({
   createdBy: {
     type: String,
     label: 'The ID of the user who created this event.',
+    optional: true,
   },
   name: {
     type: String,
@@ -69,7 +70,7 @@ export const EventsSchema = new SimpleSchema({
   },
   updatedAt: {
     type: String,
-    label: 'The ISO8601 timestamp for the date this event was update.',
+    label: 'The ISO8601 timestamp for the date this event was updated at.',
     autoValue() {
       if (this.isInsert || this.isUpdate) return (new Date()).toISOString();
     },
